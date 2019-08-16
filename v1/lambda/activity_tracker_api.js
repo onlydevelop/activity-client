@@ -16,7 +16,6 @@ exports.handler = (event, context, callback) => {
       console.log(err);
       status = "Error";
     } else {
-
       status = "Success";
     }
   });
