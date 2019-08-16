@@ -3,11 +3,11 @@
 import json
 import sys
 import time
-import base64
 import re
 import os
 import requests
 import random
+from util import util
 
 from os.path import join, dirname
 from dotenv import load_dotenv
@@ -18,17 +18,6 @@ dotenv_path = join(dirname(__file__), '.env')
 # Load file from the path.
 load_dotenv(dotenv_path)
 
-def repeat(c, n):
-    r = ""
-    for i in range(n):
-        r = r + c
-    return r
-
-def encode(data):
-    encodedBytes = base64.b64encode(data.encode("utf-8"))
-    encodedStr = str(encodedBytes, "utf-8")
-    return encodedStr
-
 def get_questions():
     url = os.getenv('s3url')
     try:
@@ -37,10 +26,6 @@ def get_questions():
     except:
         print("Internet connection is down. Please check the Wifi modem!")
         sys.exit(1)
-
-def banner(text):
-    print(text)
-    print(repeat("-", len(text)))
 
 # Structure of the data
 # [
@@ -99,33 +84,24 @@ def ask_questions(data):
     for item in data:
         if "disabled" in item:
             continue
-        banner(item["subject"])
+        util.banner(item["subject"])
         for topic in item["topics"]:
             if "disabled" in topic:
                 continue
-            banner(topic["topic"])
+            util.banner(topic["topic"])
             questions = topic["questions"]
             random.shuffle(questions)
             for question in questions:
                 if "disabled" in question:
                     continue
                 print("")
-                banner(question["question"])
+                util.banner(question["question"])
                 options = question["answer"]["options"]
                 random.shuffle(options)
                 for i, option in enumerate(options, start=1):
                     print(f"{i}: {option}")
                 res = check_answer(item["subject"], topic["topic"], question)
                 print(res)
-
-def post_activity(response):
-    url = os.getenv('url')
-    data = json.dumps(response)
-    try:
-        requests.post(url = url, data = data)
-    except:
-        print("Internet connection is down. Please check the Wifi modem!")
-        sys.exit(1)
 
 def prepare_response(subject, topic, start_time, request, response, correct, delta):
     data = {
@@ -136,7 +112,7 @@ def prepare_response(subject, topic, start_time, request, response, correct, del
         "correct": correct,
         "delta": delta
     }
-    post_activity(data)
+    util.post_activity(data)
     return data
 
 def check_answer(subject, topic, question):
@@ -149,7 +125,7 @@ def check_answer(subject, topic, question):
         correct = 'no'
         print("That's not correct!")
     end_time = int(time.time())
-    return prepare_response(subject, topic, start_time, encode(question["question"]), encode(res), correct, (end_time - start_time))
+    return prepare_response(subject, topic, start_time, util.encode(question["question"]), util.encode(res), correct, (end_time - start_time))
 
 data = get_data()
 ask_questions(data)
