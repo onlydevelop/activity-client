@@ -15,41 +15,39 @@
     <div class="container-fluid">
       <!-- Sub topic row -->
       <div class="row">
-        <div id="subtopic" class="col"><h2>Maths-Basic</h2></div>
+        <div id="subtopic" class="col"><h2>{{ subtopic }}</h2></div>
       </div>
 
       <!-- Image -->
       <div class="row">
-        <div id="image" class="col"> <img src="../img/birds.jpg" class="mx-auto d-block"> </div>
+        <div id="image" class="col"> <img v-bind:src="image" class="mx-auto d-block"> </div>
       </div>
 
       <!-- Question -->
       <div class="row">
-        <div id="question" class="col"><h5>How many birds are there?</h5></div>
+        <div id="question" class="col"><h5>{{ question }}</h5></div>
       </div>
 
-      <!-- Choices -->
-      <div class="row">
-        <div id="choices" class="col">
-          <table class="table">
-            <tbody>
-              <tr><td>3</td></tr>
-              <tr><td>4</td></tr>
-              <tr><td>5</td></tr>
-              <tr><td>6</td></tr>
-            </tbody>
-          </table>
-        </div>
+      <!-- Options -->
+      <div id="options">
+        <ul>
+          <option-item
+            v-for="option in options"
+            v-bind:option="option"
+            v-bind:key="option.id"
+          ></option-item>
+        </ul>
       </div>
 
       <!-- Response -->
-      <form action="/action_page.php">
-        <div class="form-group">
-          <label for="answer">Answer:</label>
-          <input type="text" class="form-control" id="answer" placeholder="" name="answer">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+      <div class="form-group" id="response">
+        <label for="answer">Answer:</label>
+        <input ref="txtResponse" type="text" class="form-control" id="answer" placeholder="" name="answer">
+        <br/>
+        <button class="btn btn-primary" v-on:click="onSubmit">Submit</button>
+        <br/><br/>
+        <span ref="txtFeedback"></span>
+      </div>
 
     </div>
 
