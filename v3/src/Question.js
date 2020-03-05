@@ -22,13 +22,18 @@ export default class Question extends React.Component {
         }
     }
 
+    static getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+    }
+
     static getDerivedStateFromProps(props, state) {
         console.log("value = " + JSON.stringify(props.value))
         if(state.subject !== props.value) {
             var subject = state.data.find(o => o.subject === props.value);
             if(subject) {
-                var topics = subject["topics"][0]
-                var questions = topics["questions"][0]
+
+                var topics = subject["topics"][Question.getRandomInt(subject["topics"].length)]
+                var questions = topics["questions"][Question.getRandomInt(topics["questions"].length)]
                 var options = questions["answer"]["options"]
 
                 console.log("subject = " + subject["subject"])
@@ -47,17 +52,6 @@ export default class Question extends React.Component {
         return null;
     }
     
-
-    // componentDidMount() {
-    //     fetch("https://raw.githubusercontent.com/onlydevelop/questions/master/questions.json")
-    //     .then(res => res.json())
-    //     .then((data) => {
-    //         this.setState({questions: data})
-    //         console.log(data)
-    //     })
-    //     .catch(console.log)
-    // }
-
     render() {
         return (
             <div class="container-fluid">
@@ -73,7 +67,7 @@ export default class Question extends React.Component {
         
                 <div id="options">
                     <ol>
-        {this.state.options.map(option => <li>{option}</li>)}
+                        {this.state.options.map(option => <li>{option}</li>)}
                     </ol>
                 </div>
         
