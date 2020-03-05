@@ -32,7 +32,7 @@ class LeftNav extends React.Component {
     render() {
         return (
             <div class="btn-group-vertical" role="group" aria-label="Basic example">
-                <Subject value="Social Studies" updateState={this.props.updateState}/>
+                <Subject value="SocialStudies" updateState={this.props.updateState}/>
                 <Subject value="English Grammer" updateState={this.props.updateState}/>
                 <Subject value="English Literature" updateState={this.props.updateState}/>
                 <Subject value="Science" updateState={this.props.updateState}/>

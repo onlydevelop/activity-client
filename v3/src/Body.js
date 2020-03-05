@@ -1,13 +1,10 @@
 import React from 'react';
+import Question from './Question';
 
-class Body extends React.Component {
+export default class Body extends React.Component {
     render() {
         return (
-            <div class="row">
-                Selected Topic: {this.props.value}
-            </div>
+            <Question value={this.props.value}/>
         )
     }
 }
-
-export default Body;
