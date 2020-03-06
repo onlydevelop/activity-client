@@ -33,6 +33,7 @@ export default class Question extends React.Component {
     }
 
     static getDerivedStateFromProps(props, state) {
+        console.log("state.subject = " + JSON.stringify(state.subject))
         console.log("value = " + JSON.stringify(props.value))
         if(state.subject !== props.value) {
             var subject = state.data.find(o => o.subject === props.value);
@@ -58,6 +59,11 @@ export default class Question extends React.Component {
                     response: "",
                     feedback: "",
                     visible: true
+                }
+            } else {
+                return {
+                    subject: "",
+                    visible: false
                 }
             }
         }
