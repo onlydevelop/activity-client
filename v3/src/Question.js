@@ -54,23 +54,16 @@ export default class Question extends React.Component {
     
     render() {
         return (
-            <div class="container-fluid">
-                <div class="row"><h2>{this.state.subject}</h2></div>
-
-                <div class="row">
-                    <div id="subtopic" class="col"><h3>{this.state.topic}</h3></div>
-                </div>
-        
-                <div class="row">
-                    <div id="question" class="col"><h5>{this.state.question}</h5></div>
-                </div>
-        
-                <div id="options">
+            <div class="card">
+              <h4 class="card-header">{this.state.topic}</h4>
+              <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">{this.state.question}</h6>
+                <div class="card-text">
                     <ol>
                         {this.state.options.map(option => <li>{option}</li>)}
                     </ol>
                 </div>
-        
+              </div>
             </div>
         )
     }
