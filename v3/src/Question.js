@@ -21,7 +21,8 @@ export default class Question extends React.Component {
             options: [],
             correct: "",
             response: "",
-            feedback: ""
+            feedback: "",
+            visible: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.validateAnswer = this.validateAnswer.bind(this);
@@ -55,7 +56,8 @@ export default class Question extends React.Component {
                     options: options,
                     correct: correct,
                     response: "",
-                    feedback: ""
+                    feedback: "",
+                    visible: true
                 }
             }
         }
@@ -69,7 +71,7 @@ export default class Question extends React.Component {
     validateAnswer() {
         let feedback = "";
         if(this.state.response === this.state.correct) {
-            feedback = "You are orrect!";
+            feedback = "You are correct!";
         } else {
             feedback = "Correct answer: " + this.state.correct;
         }
@@ -78,6 +80,9 @@ export default class Question extends React.Component {
     }
 
     render() {
+        if (!this.state.visible) {
+            return null;
+        }
         return (
             <div class="card">
               <h4 class="card-header">{this.state.topic}</h4>
@@ -92,7 +97,7 @@ export default class Question extends React.Component {
                     <input type="text" class="form-control mb-2 mr-sm-2" value={this.state.response} onChange={this.handleChange}/>
                     <button type="submit" class="btn btn-secondary mb-2" onClick={this.validateAnswer}>Check</button>
                 </div>
-        <div class="card-footer">{this.state.feedback}</div>
+                 <div class="card-footer">{this.state.feedback}</div>
               </div>
             </div>
         )
