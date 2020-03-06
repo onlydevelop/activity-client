@@ -26,6 +26,7 @@ export default class Question extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.validateAnswer = this.validateAnswer.bind(this);
+        this.moveNext = this.moveNext.bind(this);
     }
 
     static getRandomInt(max) {
@@ -33,7 +34,6 @@ export default class Question extends React.Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        console.log("state.subject = " + JSON.stringify(state.subject))
         console.log("value = " + JSON.stringify(props.value))
         if(state.subject !== props.value) {
             var subject = state.data.find(o => o.subject === props.value);
@@ -82,7 +82,16 @@ export default class Question extends React.Component {
             feedback = "Correct answer: " + this.state.correct;
         }
 
-        this.setState({feedback: feedback});
+        this.setState({
+            feedback: feedback
+        });
+    }
+
+    moveNext() {
+        this.setState({
+            feedback: "",
+            subject: ""
+        });
     }
 
     render() {
@@ -101,7 +110,8 @@ export default class Question extends React.Component {
                 </div>
                 <div class="form-inline">
                     <input type="text" class="form-control mb-2 mr-sm-2" value={this.state.response} onChange={this.handleChange}/>
-                    <button type="submit" class="btn btn-secondary mb-2" onClick={this.validateAnswer}>Check</button>
+                    <button type="submit" class="btn btn-secondary mb-2 mr-sm-2" onClick={this.validateAnswer}>Check</button>
+                    <button type="submit" class="btn btn-secondary mb-2" onClick={this.moveNext}>Next</button>
                 </div>
                  <div class="card-footer">{this.state.feedback}</div>
               </div>
