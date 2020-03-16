@@ -1,20 +1,12 @@
 import React from 'react';
+var configs = require("./config/prod.json");
 
 export default class Question extends React.Component {
     
     constructor(props) {
         super(props);
-        this.data = require('./resources/questions.json')
-        console.log("******** READING DATA ********")
-        //     fetch("https://raw.githubusercontent.com/onlydevelop/questions/master/questions.json")
-        //     .then(res => res.json())
-        //     .then((data) => {
-        //         this.setState({data: data})
-        //         console.log(data)
-        //     })
-        //     .catch(console.log)
         this.state = {
-            data: this.data,
+            data: [],
             subject: "",
             topic: "",
             question: "",
@@ -24,6 +16,15 @@ export default class Question extends React.Component {
             feedback: "",
             visible: false
         }
+        fetch(configs.endpoints.questions)
+            .then(res => res.json())
+            .then((data) => {
+                this.setState({data: data});
+                console.log(data);
+                console.log(this.state);
+            })
+            .catch(console.log);
+
         this.handleChange = this.handleChange.bind(this);
         this.validateAnswer = this.validateAnswer.bind(this);
         this.moveNext = this.moveNext.bind(this);
