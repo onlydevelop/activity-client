@@ -14,13 +14,13 @@ class Subject extends React.Component {
     render() {
         return (
             <button type="button" class="btn btn-secondary left-nav-button" onClick={this.handleClick}>
-                {this.props.value}
+                {this.props.title}
             </button>
         )
     }
 
     handleClick() {
-        this.setState({selectedSubject: this.props.value}, this.updateParentState);
+        this.setState({selectedSubject: this.props.id}, this.updateParentState);
     }
 
     updateParentState() {
@@ -52,7 +52,7 @@ class LeftNav extends React.Component {
         return (
             <div class="btn-group-vertical" role="group" aria-label="Basic example">
                 {this.state.subjects.map(subject =>
-                    <Subject value={subject.id} title={subject.title} updateState={this.props.updateState}/>
+                    <Subject id={subject.id} title={subject.title} updateState={this.props.updateState}/>
                 )}
             </div>
         )
