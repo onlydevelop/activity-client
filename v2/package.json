@@ -10,6 +10,6 @@
   "author": "Dipanjan Bhowmik <onlydevelop@gmail.com> (https://onlydevelop.github.io/)",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^5.0.8"
+    "electron": "^9.4.0"
   }
 }
